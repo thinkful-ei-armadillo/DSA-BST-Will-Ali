@@ -152,12 +152,15 @@ class BinarySearchTree {
   }
 }
 
+// What does this program do?
 function tree(t){
   if(!t){
     return 0;
   }
   return tree(t.left) + t.value + tree(t.right);
 }
+// Answer: Adds up all of the node values of a given tree
+
 
 // Height of a BST
 
@@ -197,21 +200,36 @@ function heightOfBST(bst) {
 }
 
 // Is it a BST?
-
-// function isBst(bst) {
-//   if (!bst.key) {
-//     return false;
-//   }
-//   else {
-//     if (bst.key < bst.right.key && bst.key > bst.left.key) {
-//       isBst(bst.right);
-//       isBst(bst.left);
-//     } else {
-//       return false;
-//     }
-//     return true;
-//   }
-// }
+function isBst(bst) {
+  if (!bst.key) {
+    return false;
+  }
+  if (bst.left) {
+    // check to see if the values to the left are less than root
+    if (bst.left.key > bst.key) {
+      return false;
+    } else {
+      return isBst(bst.left);
+    }
+  }
+  // check to see if the values to the right are less than root
+  if (bst.right) {
+    if (bst.right.key < bst.key) {
+      return false;
+    } else {
+      return isBst(bst.right);
+    }
+  }
+  // check for 2 children
+  if (bst.right && bst.left) {
+    isBst(bst.right);
+    isBst(bst.left);
+  }
+  // check for end of the tree
+  if (!bst.right && !bst.left) {
+    return true;
+  }
+}
 
 // 3rd largest node
 
@@ -219,11 +237,13 @@ function thirdLargest(bst) {
   // do we have to sort the keys in order and subtract length by 3?
   const results = [];
   if (bst === null) {
-    return null;
+    return 0;
   } else {
-    results.push(bst.key); 
-    thirdLargest(bst.left);
-    thirdLargest(bst.right);
+    results.push(bst.value); 
+    console.log(bst.left);
+    console.log(bst.right);
+    // thirdLargest(bst.find(bst.left));
+    // thirdLargest(bst.find(bst.right));
   }
   return results;
 }
@@ -243,7 +263,8 @@ function main() {
   // console.log(tree(BST));
   // console.log(heightOfBST(BST));
   // console.log(isBst(BST));
-  console.log(thirdLargest(BST));
+  // console.log(isBst(''));
+  // console.log(thirdLargest(BST));
 }
 
 main();
