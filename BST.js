@@ -261,7 +261,6 @@ function third_largest(tree) {
   return state.result;
 }
 
-
 // Balanced BST
 
 function balanced(bst) {
@@ -287,6 +286,8 @@ let arr1 = [3, 5, 4, 6, 1, 0, 2];
 let arr2 = [3, 1, 5, 2, 4, 6, 0];
 
 function sameBSTs(arr1, arr2) {
+  // works better with arrLength, index1, index2 as extra params
+  // index1 === arrLength
   // base case
   if (arr1[0] !== arr2[0]) {
     return false;
