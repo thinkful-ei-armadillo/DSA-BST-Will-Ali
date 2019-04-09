@@ -235,6 +235,33 @@ function thirdLargest(str) {
   return results.sort()[results.length-3];
 }
 
+// alternative third largest
+// Write an algorithm to find the third largest value in a binary search tree
+
+function nth_largest(tree, state) { 
+  //Finding the largest node means traversing the right first.
+  if (tree.right) {
+    nth_largest(tree.right, state);
+    if (state.result) return;
+  }
+  if (!--state.n) { 
+    //Found it.
+    state.result = tree.key; 
+    return;
+  }
+  if (tree.left) nth_largest(tree.left, state);
+}
+
+function third_largest(tree) {
+  //Special case: empty tree.
+  if (tree.key == null) 
+    return null;
+  let state = {n: 3, result: null};
+  nth_largest(tree, state);
+  return state.result;
+}
+
+
 // Balanced BST
 
 function balanced(bst) {
@@ -251,17 +278,47 @@ function balanced(bst) {
 
 // Are they the same BSTs?
 
-// time complexity: 
+// Rules: Don't construct the BST
 // arr1: [3, 5, 4, 6, 1, 0, 2]
 // arr2: [3, 1, 5, 2, 4, 6, 0]
-// output: true
+// expected output: true
 
 let arr1 = [3, 5, 4, 6, 1, 0, 2];
 let arr2 = [3, 1, 5, 2, 4, 6, 0];
+
 function sameBSTs(arr1, arr2) {
+  // base case
+  if (arr1[0] !== arr2[0]) {
+    return false;
+  }
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  if (arr1.length === 1 && arr2.length === 1) {
+    return true;
+  }
+  let root = arr1[0];
+  // make sure both BSTs are the same height
+  // if a child is < root then apply recursive fn on left child for node comparison
+  // if a child is > root then apply recursive fn on right child for node comparison
+  let leftArray1 = [];
+  let rightArray1 = [];
+  let leftArray2 = [];
+  let rightArray2 = [];
+  for (let i = 1; i < arr1.length; i++) {
+    if (arr1[i] < root) {
+      leftArray1.push(arr1[i]);
+    } else if (arr1[i] > root) {
+      rightArray1.push(arr1[i]);
+    }
+    if (arr2[i] < root) {
+      leftArray2.push(arr2[i]);
+    } else if (arr2[i] > root) {
+      rightArray2.push(arr2[i]);
+    }
+  }
+  return sameBSTs(leftArray1, leftArray2) && sameBSTs(rightArray1, rightArray2);
 }
-
-
 
 function main() {
   const BST = new BinarySearchTree();
@@ -269,10 +326,10 @@ function main() {
   BST.insert(1,1);
   BST.insert(4,4);
   BST.insert(6,6);
-  // BST.insert(9,9);
+  BST.insert(9,9);
   BST.insert(2,2);
-  // BST.insert(5,5);
-  // BST.insert(7,7);
+  BST.insert(5,5);
+  BST.insert(7,7);
   // console.log(BST);
   // console.log(tree(BST));
   // console.log(heightOfBST(BST));
@@ -281,6 +338,7 @@ function main() {
   // console.log(treeValues(BST));
   // console.log(thirdLargest(treeValues(BST)));
   // console.log(balanced(BST));
+  console.log(sameBSTs([3, 5, 4, 6, 1, 0, 2],[3, 1, 5, 2, 4, 6, 0]));
 }
 
 main();
