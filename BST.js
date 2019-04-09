@@ -249,6 +249,19 @@ function balanced(bst) {
   }
 }
 
+// Are they the same BSTs?
+
+// time complexity: 
+// arr1: [3, 5, 4, 6, 1, 0, 2]
+// arr2: [3, 1, 5, 2, 4, 6, 0]
+// output: true
+
+let arr1 = [3, 5, 4, 6, 1, 0, 2];
+let arr2 = [3, 1, 5, 2, 4, 6, 0];
+function sameBSTs(arr1, arr2) {
+}
+
+
 
 function main() {
   const BST = new BinarySearchTree();
@@ -268,7 +281,6 @@ function main() {
   // console.log(treeValues(BST));
   // console.log(thirdLargest(treeValues(BST)));
   // console.log(balanced(BST));
-
 }
 
 main();
