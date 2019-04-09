@@ -163,26 +163,7 @@ function tree(t){
 
 
 // Height of a BST
-
 function heightOfBST(bst) {
-  // let count = 1;
-  // // base case
-  // if (bst.key === null) {
-  //   return 0;
-  // }
-  // if (!bst.left && !bst.right) {
-  //   return count;
-  // }
-  // // recursion begin
-  // if (bst.left && bst.right) {
-  //   return heightOfBST(bst.left, count + 1) > heightOfBST(bst.right, count + 1) ? heightOfBST(bst.left, count + 1) : heightOfBST(bst.right, count + 1);
-  // }
-  // if (bst.left) {
-  //   return heightOfBST(bst.left, count + 1);
-  // }
-  // if (bst.right) {
-  //   return heightOfBST(bst.right, count + 1);
-  // }
   let leftHeight = 0;
   let rightHeight = 0;
   if(!bst) {
@@ -233,19 +214,39 @@ function isBst(bst) {
 
 // 3rd largest node
 
-function thirdLargest(bst) {
+function treeValues(bst) {
   // do we have to sort the keys in order and subtract length by 3?
-  const results = [];
-  if (bst === null) {
-    return 0;
+  // helper function with a generic amt that could be given
+  let resultsString = '';
+  if(!bst) {
+    return '';
   } else {
-    results.push(bst.value); 
-    console.log(bst.left);
-    console.log(bst.right);
-    // thirdLargest(bst.find(bst.left));
-    // thirdLargest(bst.find(bst.right));
+    resultsString += `${bst.value}_` + treeValues(bst.left) + treeValues(bst.right);
   }
-  return results;
+  return resultsString;
+}
+
+function thirdLargest(str) {
+  let results = [];
+  let arr = str.split('_');
+  for (let i = 0; i < arr.length-1; i++) {
+    results.push(arr[i]);
+  }
+  return results.sort()[results.length-3];
+}
+
+// Balanced BST
+
+function balanced(bst) {
+  let leftHeight = heightOfBST(bst.left);
+  let rightHeight = heightOfBST(bst.right);
+
+  if(Math.abs(rightHeight - leftHeight) <= 1) {
+    return true;
+  }
+  else if (Math.abs(rightHeight - leftHeight) > 1) {
+    return false;
+  }
 }
 
 
@@ -255,16 +256,19 @@ function main() {
   BST.insert(1,1);
   BST.insert(4,4);
   BST.insert(6,6);
-  BST.insert(9,9);
+  // BST.insert(9,9);
   BST.insert(2,2);
-  BST.insert(5,5);
-  BST.insert(7,7);
+  // BST.insert(5,5);
+  // BST.insert(7,7);
   // console.log(BST);
   // console.log(tree(BST));
   // console.log(heightOfBST(BST));
   // console.log(isBst(BST));
   // console.log(isBst(''));
-  // console.log(thirdLargest(BST));
+  // console.log(treeValues(BST));
+  // console.log(thirdLargest(treeValues(BST)));
+  // console.log(balanced(BST));
+
 }
 
 main();
